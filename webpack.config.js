@@ -1,7 +1,9 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 // const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
+const autoprefixer = require('autoprefixer');
 // const bundleExtractPlugin = new ExtractTextPlugin({
 //     filename: 'css/bundle.css',
 // });
@@ -28,7 +30,7 @@ module.exports = {
             {
                 test: /\.css$/,
                 use: [MiniCssExtractPlugin.loader, "css-loader"]
-            }
+            },
             // ,
             // {
             //     test: /\.scss$/,
@@ -44,6 +46,32 @@ module.exports = {
             //         }
             //     }]
             // }
+            {
+                test: /\.scss$/,
+                use: ExtractTextPlugin.extract({
+                  use: [
+                    {
+                      loader: 'css-loader',
+                      options: {
+                        sourceMap: true
+                      }
+                    },
+                    {
+                      loader: 'postcss-loader',
+                      options: {
+                        plugins: [autoprefixer('last 2 version')],
+                        sourceMap: true
+                      }
+                    },
+                    {
+                      loader: 'sass-loader',
+                      options: {
+                        sourceMap: true
+                      }
+                    }
+                  ]
+                }),
+              }
         ]
     },
     plugins: [
@@ -54,6 +82,10 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: "[name].css",
             chunkFilename: "[id].css"
+        }),
+        new ExtractTextPlugin({
+          filename: 'styles.[hash].css',
+          allChunks: false,
         })
         // ,
         // new ExtractTextPlugin({

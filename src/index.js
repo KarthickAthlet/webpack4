@@ -3,5 +3,5 @@
 // window.iAmJavascriptES6 = iAmJavascriptES6;
 
 import App from "./app";
-import style from "./main.css";
-// import style1 from "./test1.scss";
+// import style from "./main.css";
+import style from "./test1.scss";
