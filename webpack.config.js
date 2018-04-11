@@ -1,14 +1,13 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+// const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-// const ExtractTextPlugin = require("extract-text-webpack-plugin");
-
-// const extractSass = new ExtractTextPlugin({
-//     filename: "[name].[contenthash].css",
-//     disable: process.env.NODE_ENV === "development"
+// const bundleExtractPlugin = new ExtractTextPlugin({
+//     filename: 'css/bundle.css',
 // });
 
-module.exports = {
+module.exports = {    
+    // devtool: "sourcemap",
     module: {
         rules: [{
                 test: /\.(js|jsx)$/,
@@ -28,8 +27,23 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                use:  [MiniCssExtractPlugin.loader, "css-loader"]
+                use: [MiniCssExtractPlugin.loader, "css-loader"]
             }
+            // ,
+            // {
+            //     test: /\.scss$/,
+            //     use: [{
+            //         loader: "style-loader"
+            //     }, {
+            //         loader: "css-loader", options: {
+            //             sourceMap: true
+            //         }
+            //     }, {
+            //         loader: "sass-loader", options: {
+            //             sourceMap: true
+            //         }
+            //     }]
+            // }
         ]
     },
     plugins: [
@@ -41,5 +55,9 @@ module.exports = {
             filename: "[name].css",
             chunkFilename: "[id].css"
         })
+        // ,
+        // new ExtractTextPlugin({
+        //     filename: 'css/bundle.css',
+        // })
     ]
 };
